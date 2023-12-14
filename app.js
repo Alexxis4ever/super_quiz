@@ -85,7 +85,7 @@ function guardar() {
     // Elemento span para mostrar la cantidad con fondo gris
     let cantidadSpan = document.createElement("span");
     cantidadSpan.textContent = productoParaModificar["cantidad"];
-    cantidadSpan.style.backgroundColor = "lightgray";
+    cantidadSpan.style.fontWeight = "bold";
     div.appendChild(cantidadSpan);
 
     // Texto indicando el precio
@@ -94,7 +94,9 @@ function guardar() {
 
     // Elemento span para mostrar el precio en negrita
     let precioSpan = document.createElement("span");
-    precioSpan.style.fontWeight = "bold";
+    precioSpan.style.backgroundColor = "gray";
+    precioSpan.style.color = "yellow";
+    
     precioSpan.textContent = productoParaModificar["precio"];
     div.appendChild(precioSpan);
 
