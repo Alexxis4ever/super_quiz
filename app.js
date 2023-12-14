@@ -13,7 +13,7 @@ const div = document.querySelector(".contenedor");
 
 inventario.forEach((producto, index) => {
     const div2 = document.createElement("div");
-    div2.textContent = "producto:" + producto["nombre"] + ", cantidad:" + producto["cantidad"] + ", precio:" + producto["precio"] + ", categoria:" + producto["categoria"]
+    div2.textContent = "producto:" + producto["nombre"] + ", cantidad:" + producto["cantidad"] + ", precio:" + producto["precio"] + ", categoria:" + producto["categoria"];
 
     div2.id = producto["nombre"];
     div.appendChild(div2);
@@ -25,6 +25,11 @@ inventario.forEach((producto, index) => {
     div.appendChild(button);
     // const br = document.createElement("br");
     // div.appendChild(br);
+
+    const intercambiarButton = document.createElement("button");
+    intercambiarButton.textContent = "Intercambiar";
+    intercambiarButton.setAttribute("onclick", `intercambiarOrden("${producto.nombre}")`);
+    div.appendChild(intercambiarButton);
 
 });
 
@@ -52,6 +57,9 @@ function editar(nombreProducto) {
     idHtml.value = productoParaModificar.nombre;
 }
 
+
+
+
 function guardar() {
     const nombreProducto = document.getElementById("id").value;
 
@@ -77,7 +85,7 @@ function guardar() {
     while (div.firstChild) {
         div.removeChild(div.firstChild);
     }
-
+    
     // Texto inicial mostrando el nombre del producto
     const textoProducto = document.createTextNode(`producto:${productoParaModificar["nombre"]}, cantidad:`);
     div.appendChild(textoProducto);
@@ -119,4 +127,57 @@ function guardar() {
     // Agregar el span al div
     div.appendChild(span);
 
+}
+
+
+function intercambiarOrden(nombreProducto) {
+
+    const div = document.getElementById(nombreProducto);
+
+    // limpia el div
+    div.textContent = '';
+
+    let productoParaModificar;
+    inventario.forEach((producto) => {
+        if (producto.nombre == nombreProducto) {
+            productoParaModificar = producto;
+        }
+    })
+
+    if (productoParaModificar) {
+        const textoProducto = document.createTextNode(`producto:${productoParaModificar["nombre"]}, cantidad:`);
+        div.appendChild(textoProducto);
+
+        let cantidadSpan = document.createElement("span");
+        cantidadSpan.textContent = productoParaModificar["cantidad"];
+        cantidadSpan.style.fontWeight = "bold";
+        div.appendChild(cantidadSpan);
+
+        const nuevoPrecio = document.createTextNode(`, categoria:`);
+        div.appendChild(nuevoPrecio);
+        
+        let span = document.createElement("span");
+        // Aplicar estilo rojo si la categoría es "Alimento"
+        if (productoParaModificar["categoria"] == "Alimento") {
+            span.style.color = "red";
+        }
+    
+        // Texto de la categoría
+        const textoCategoriaValor = document.createTextNode(productoParaModificar["categoria"]);
+        span.appendChild(textoCategoriaValor);
+    
+        // Agregar el span al div
+        div.appendChild(span);
+
+        const textoPrecio = document.createTextNode(`, precio:`);
+        div.appendChild(textoPrecio);
+
+        // Elemento span para mostrar el precio en negrita
+        let precioSpan = document.createElement("span");
+        precioSpan.style.backgroundColor = "gray";
+        precioSpan.style.color = "yellow";
+        
+        precioSpan.textContent = productoParaModificar["precio"];
+        div.appendChild(precioSpan);
+    }
 }
